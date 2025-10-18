@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fancy Name Maker</title>
+<title>Fancy Name & Number Maker</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap');
@@ -43,6 +43,8 @@ textarea {
     border: none;
     font-size: 1.2rem;
     margin-bottom: 2rem;
+    color: #000;
+    background-color: #fff;
 }
 .font-item {
     display: flex;
@@ -74,43 +76,56 @@ textarea {
 </head>
 <body class="min-h-screen px-4 py-8">
 
-<h1 class="header-title">🖋️🎊 Fancy Name Maker</h1>
+<h1 class="header-title">🖋️🎊 Fancy Name & Number Maker</h1>
 
 <a href="https://www.snapchat.com/add/k4miran.sndi?share_id=az_iUCJeD3I&locale=tr-TR" target="_blank" class="snap-btn">Add me on Snapchat 👻</a>
 
-<textarea id="nameInput" placeholder="Type your name"></textarea>
+<textarea id="nameInput" placeholder="Type your name or numbers"></textarea>
 <div id="fontsList"></div>
 
 <script>
 const fontsList = document.getElementById('fontsList');
 const input = document.getElementById('nameInput');
 
-// Fancy font alfabeleri
+// Tüm normal karakterler (harfler + rakamlar)
+const normalChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+// Tüm fancy diziler: harf + rakam birleştirilmiş
 const styles = [
-"𐌀𐌁𐌂𐌃𐌄𐌅Ᏽ𐋅𐌉Ꮭ𐌊𐌋𐌌𐌍Ꝋ𐌐𐌒𐌓𐌔𐌕𐌵ᕓᏔ𐋄𐌙Ɀ",
-"ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖqʳˢᵗᵘᵛʷˣʸᶻ",
-"ₐbcdₑfgₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓyz",
-"ᏗᏰፈᎴᏋᎦᎶᏂᎥᏠᏦᏝᎷᏁᎧᎮᎤᏒᏕᏖᏬᏉᏇጀᎩፚ",
-"♥a♥b♥c♥d♥e♥f♥g♥h♥i♥j♥k♥l♥m♥n♥o♥p♥q♥r♥s♥t♥u♥v♥w♥x♥y♥z♥",
-"⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵",
-"𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷",
-"ᗩᗷᑕᗪᗴᖴǤᕼᎥᒎᛕᒪᗰᑎᗝᑭɊᖇᔕ丅ᑌᐯᗯ᙭Ƴ乙",
-"𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳",
-"ꋬꃳꉔ꒯ꏂꊰꍌꁝ꒐꒻ꀘ꒒ꂵꋊꄲꉣꆰꋪꇙ꓄꒤꒦ꅐꉧꌦꁴ",
-"คც८ძ૯Բ૭ҺɿʆқՆɱՈ૦ƿҩՐς੮υ౮ω૪עઽ",
-"𝐚𝐛ςĐᵉ𝔣ⓖħ𝕚ᒎ𝓚ŁⓂ𝐍ό𝐩ợŘⓈ𝐓𝐔ᐯ𝐰𝕩ү𝔷"
+"ꪖ᥇ᥴᦔꫀᠻᧁꫝⅈ𝕛𝕜ꪶꪑꪀꪮρ𝕢𝕣ડ𝕥ꪊꪜ᭙᥊ꪗ𝕫0123456789",
+"a͓̽b͓̽c͓̽d͓̽e͓̽f͓̽g͓̽h͓̽i͓̽j͓̽k͓̽l͓̽m͓̽n͓̽o͓̽p͓̽q͓̽r͓̽s͓̽t͓̽u͓̽v͓̽w͓̽x͓̽y͓̽z͓̽0123456789",
+"a̷b̷c̷d̷e̷f̷g̷h̷i̷j̷k̷l̷m̷n̷o̷p̷q̷r̷s̷t̷u̷v̷w̷x̷y̷z̷0123456789",
+"ΛBᄃDΣFGΉIJKᄂMПӨPQЯƧƬЦVЩXYZ0123456789",
+"ā̤̓̍͘b̬͖̏́͢c͕͗ͤ̕̕ḑ̴̞͛̒ẹ̿͋̒̕f̵͖̜̉ͅĝ̽̓̀͑ḣ̖̻͛̓ỉ͔͖̜͌j̪̟̮̔ͩḳ̯͍̑ͦl̙͖̑̾ͣḿ̬̏ͤͅṇ̤͛̒̍o̯̱̊͊͢p̞̈͑̚͞q͉ͬ͋̇ͥr̴̨̦͕̝s̠҉͍͊ͅt̲̂̓ͩ̑ư̡͕̭̇v͒̄ͭ̏̇w̦̺̐̐͟x̛̘̠̹͋y҉̃̀̋̑z̼͙̓́ͭ0123456789",
+"ᥲხᥴძᥱƒgɦᎥ᧒ƙᥣꪔꪀ᥆ρqᖇ᥉ƚᥙ᥎᭙ꪎyᤁ0123456789",
+"𝖆𝖉𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖗𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝒗𝒘𝖝𝒚𝒛0123456789",
+"𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ0123456789",
+"𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯0123456789",
+"𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟0123456789",
+"𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏Ýℤ0123456789",
+"𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝑳𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙0123456789",
+"𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃0123456789",
+"𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭0123456789",
+"ᗩᗷᑕᗪᗴᖴᘜᕼIᒍKᒪᗰᑎOᑭᑫᖇՏTᑌᐯᗯ᙭Yᘔ0123456789",
+"𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝??𝘟𝘠𝘡0123456789",
+"𐌀𐌁𐌂𐌃𐌄𐌅Ᏽ𐋅𐌉Ꮭ𐌊𐌋𐌌𐌍Ꝋ𐌐𐌒𐌓𐌔𐌕𐌵ᕓᏔ𐋄𐌙Ɀ0123456789",
+"ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖqʳˢᵗᵘᵛʷˣʸᶻ0123456789",
+"ₐbcdₑfgₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓyz0123456789",
+"ᏗᏰፈᎴᏋᎦᎶᏂᎥᏠᏦᏝᎷᏁᎧᎮᎤᏒᏕᏖᏬᏉᏇጀᎩፚ0123456789",
+"♥a♥b♥c♥d♥e♥f♥g♥h♥i♥j♥k♥l♥m♥n♥o♥p♥q♥r♥s♥t♥u♥v♥w♥x♥y♥z♥0123456789",
+"⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵0123456789",
+"𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789"
 ];
 
 function applyStyle(name, style) {
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     let result = '';
-    for(let i = 0; i < name.length; i++) {
+    for (let i = 0; i < name.length; i++) {
         const c = name[i];
-        const index = alphabet.indexOf(c);
-        if(index !== -1){
+        const index = normalChars.indexOf(c);
+        if (index !== -1) {
             result += style[index % style.length];
         } else {
-            result += c; // Latin olmayan karakterler olduğu gibi kalacak
+            result += c;
         }
     }
     return result;
