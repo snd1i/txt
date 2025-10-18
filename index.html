@@ -7,7 +7,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/feather-icons"></script>
 
-<!-- Google Fonts (karmaşık ve modern fontlar) -->
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Orbitron&family=Press+Start+2P&family=Righteous&family=Unica+One&family=Special+Elite&family=Black+Ops+One&family=Bungee+Inline&family=Bungee+Shade&family=Sigmar+One&family=Ewert&family=Nosifer&family=Rock+Salt&family=Fugaz+One&display=swap" rel="stylesheet">
 
 <style>
@@ -73,7 +73,7 @@ textarea::placeholder {
 
 <header class="text-center mb-6">
 <h1 class="text-4xl font-bold text-pink-500 mb-2">Fancy Text Generator ✨</h1>
-<p class="text-gray-400">Type your text and see it in 15+ crazy modern fonts!</p>
+<p class="text-gray-400">Type your text and see it in crazy modern fonts! Copy real text, not styled only.</p>
 </header>
 
 <!-- Input -->
@@ -85,7 +85,7 @@ textarea::placeholder {
 <script>
 feather.replace();
 
-// Modern/karmaşık fontlar
+// Karmaşık/modern fontlar
 const fonts = [
     'Monoton','Orbitron','Press Start 2P','Righteous','Unica One','Special Elite',
     'Black Ops One','Bungee Inline','Bungee Shade','Sigmar One','Ewert','Nosifer',
@@ -95,7 +95,7 @@ const fonts = [
 const input = document.getElementById('inputText');
 const preview = document.getElementById('preview');
 
-// Her fontta satır oluştur
+// Satırları oluştur
 input.addEventListener('input', () => {
     const text = input.value.trim();
     preview.innerHTML = '';
@@ -107,13 +107,13 @@ input.addEventListener('input', () => {
         line.style.fontFamily = font;
 
         const span = document.createElement('span');
-        span.innerText = text;
+        span.innerText = text; // sadece görüntü
 
         const btn = document.createElement('button');
         btn.className = 'copy-btn';
         btn.innerText = 'Copy';
         btn.addEventListener('click', () => {
-            navigator.clipboard.writeText(text);
+            navigator.clipboard.writeText(text); // GERÇEK METİNİ KOPYALAYOR
             btn.innerText = 'Copied!';
             setTimeout(() => btn.innerText = 'Copy', 1500);
         });
