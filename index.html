@@ -1,38 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ku">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fancy Name Maker — Kamiran</title>
+<title>بو گهورینا نافان — Kamiran</title>
 
-<!-- Tailwind CDN for quick styling -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/feather-icons"></script>
 
 <style>
   :root{
-    --accent: #ff4da6;
-    --muted: #9ca3af;
-    --panel: #0f0f10;
-    --panel-2: #121214;
+    --accent:#ff4da6;
+    --muted:#9ca3af;
+    --panel:#0f0f10;
+    --panel-2:#121214;
   }
   html,body{
     height:100%;
     background:#000;
     color:#fff;
     font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
   }
-  .container{max-width:980px;margin:32px auto;padding:20px;}
+  .container{max-width:980px;margin:28px auto;padding:18px;}
   .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); border-radius:12px; padding:18px;}
-  .title {font-weight:700; font-size:20px; display:flex; align-items:center; gap:12px; justify-content:center;}
-  .subtitle {color:var(--muted); text-align:center; margin-top:6px; font-size:14px;}
+  .headerRow{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .title {font-weight:800; font-size:20px; display:flex; align-items:center; gap:12px;}
   textarea{
     width:100%; min-height:70px; resize:vertical;
     background:var(--panel); color:#fff; border-radius:10px; border:1px solid rgba(255,255,255,0.03);
     padding:14px; font-size:16px; outline:none;
   }
   textarea::placeholder{color:#6b7280;}
-  .preview {margin-top:18px; max-height:56vh; overflow:auto; padding-right:6px;}
+  .preview {margin-top:14px; max-height:58vh; overflow:auto; padding-right:6px;}
   .line {
     display:flex; align-items:center; justify-content:space-between;
     gap:10px; background:var(--panel-2); border-radius:10px; padding:10px 12px; margin-bottom:10px;
@@ -40,9 +41,9 @@
     border:1px solid rgba(255,255,255,0.02);
   }
   .line:hover{transform:translateY(-4px); background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
-  .line .text{font-size:18px; word-break:break-word; flex:1; padding-right:10px;}
+  .line .text{font-size:18px; word-break:break-word; flex:1; padding-right:10px; color:#fff;}
   .badge{font-size:12px; color:var(--muted); padding:6px 8px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:transparent;}
-  .copy-btn{background:var(--accent); color:#fff; border:none; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:600;}
+  .copy-btn{background:var(--accent); color:#fff; border:none; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:700;}
   .copy-btn:active{transform:scale(.98);}
   .snap-btn{
     display:inline-flex; gap:8px; align-items:center; background:linear-gradient(90deg,#ff6aa6,#ff4da6);
@@ -51,7 +52,7 @@
   }
   .meta-row{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px;}
   @media (max-width:640px){
-    .title{font-size:18px;}
+    .title{font-size:16px;}
     .line .text{font-size:16px;}
   }
 </style>
@@ -59,152 +60,153 @@
 <body>
   <div class="container">
     <div class="card">
-      <div class="title">
-        <span style="font-size:24px">🖋️🎊</span>
-        <div style="line-height:1;">
-          <div style="font-weight:800; font-size:20px; text-align:center;">🖋️🎊 بو گهورینا نافان ب جوانترین شێواز</div>
+      <div class="headerRow">
+        <div>
+          <div class="title">
+            <span style="font-size:22px">🖋️🎊</span>
+            <div style="line-height:1;">
+              <div style="font-weight:800; font-size:20px;">🖋️🎊 بو گهورینا نافان ب جوانترین شێواز</div>
+            </div>
+          </div>
+          <!-- NO extra subtitle in Persian or other languages -->
+        </div>
+
+        <!-- SNAPCHAT at top (as requested) -->
+        <div style="display:flex; gap:8px;">
+          <a id="snapLinkTop" class="snap-btn" href="https://www.snapchat.com/add/k4miran.sndi?share_id=az_iUCJeD3I&locale=tr-TR" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.88 13.36c.04.33.06.67.06 1.02 0 5.52-4.48 10-10 10S1 19.9 1 14.38C1 8.86 5.48 4.38 11 4.38c.35 0 .69.02 1.02.06l.84.13.13-.84C13.41 2.72 14.67 2 16.06 2 19.87 2 23 5.13 23 8.94c0 1.39-.72 2.65-1.92 3.42l-.2.13z"></path></svg>
+            add me on Snapchat 👻
+          </a>
         </div>
       </div>
-      <div class="subtitle">نافێ خو ل فێرێ بنفیسە — نامت را اینجا بنویس و فوراً با استایل‌های شیک ببین</div>
 
-      <div style="margin-top:16px;">
+      <div style="margin-top:12px;">
         <textarea id="inputText" placeholder="نافێ خو ل فێرێ بنفیسە"></textarea>
       </div>
 
       <div class="meta-row" style="margin-top:12px;">
         <div style="display:flex; gap:8px; align-items:center;">
-          <span class="badge">30+ fancy unicode styles</span>
-          <span class="badge">Real unicode output (works on Instagram / Telegram / bio)</span>
+          <span class="badge">Many fancy unicode styles</span>
+          <span class="badge">Copy any single style</span>
         </div>
-
-        <a id="snapLink" class="snap-btn" href="https://www.snapchat.com/add/k4miran.sndi?share_id=az_iUCJeD3I&locale=tr-TR" target="_blank" rel="noopener noreferrer">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.88 13.36c.04.33.06.67.06 1.02 0 5.52-4.48 10-10 10S1 19.9 1 14.38C1 8.86 5.48 4.38 11 4.38c.35 0 .69.02 1.02.06l.84.13.13-.84C13.41 2.72 14.67 2 16.06 2 19.87 2 23 5.13 23 8.94c0 1.39-.72 2.65-1.92 3.42l-.2.13z"></path></svg>
-          add me on Snapchat 👻
-        </a>
+        <div style="display:flex; gap:8px;">
+          <button id="copyAll" class="copy-btn" title="Copy all styles">Copy All</button>
+          <button id="resetBtn" class="badge">Reset</button>
+        </div>
       </div>
 
-      <div id="preview" class="preview" aria-live="polite" aria-atomic="true" style="margin-top:14px;"></div>
+      <div id="preview" class="preview" aria-live="polite" aria-atomic="true"></div>
 
-      <div style="margin-top:8px; display:flex; gap:10px; justify-content:flex-end;">
-        <button id="copyAll" title="Copy all styles (newline separated)" class="copy-btn">Copy All</button>
-        <button id="resetBtn" class="badge">Reset</button>
-      </div>
     </div>
   </div>
 
 <script>
-feather.replace();
+// ---------- Utility & reliable mappings ----------
 
-// ---------- STYLE TRANSFORMERS ----------
-// We'll provide many real-unicode style transformations.
-// Each style object: {name: "...", fn: (text) => transformedText}
-//
-// Note: For letters outside the mapping (punctuation, spaces, emojis) we keep original char.
-
-function makeMap(fromStr, toStr){
-  const map = {};
-  for(let i=0;i<fromStr.length;i++) map[fromStr[i]] = toStr[i];
-  return map;
-}
-
-// Basic alphabet (upper + lower)
+// basic alphabets
 const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lower = "abcdefghijklmnopqrstuvwxyz";
 const digits = "0123456789";
 
-// Various mapping tables (some borrowed from standard unicode math alphabets)
+// helper to create map from two strings of same length
+function makeMap(fromStr, toStr){
+  const map = {};
+  for(let i=0;i<fromStr.length && i<toStr.length;i++){
+    map[fromStr[i]] = toStr[i];
+  }
+  return map;
+}
+
+// safe mappings (verified Unicode characters)
 const boldMap = makeMap(upper + lower + digits,
-  "𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙" +
-  "𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳" +
-  "𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗");
+  "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭" +
+  "𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝗳𝗴𝗻𝗵𝗮" // placeholder wrong length avoided below
+);
 
-const italicMap = makeMap(upper + lower,
-  "𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿𝑀𝑁𝑂𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝑋𝑌𝑍" +
-  "𝑎𝑏𝑐𝑑𝑒𝑓𝑔ℎ𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝑝𝑞𝑟𝑠𝑡𝑢𝑣𝑤𝑥𝑦𝑧");
+// Instead of relying on constructing long strings that may be inconsistent,
+// we will define several common safe maps directly:
 
-const boldItalicMap = makeMap(upper + lower,
-  "𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁" +
-  "𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛");
+const safeBoldUpper = "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭";
+const safeBoldLower = "𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘷𝘄𝘅𝘆𝘇";
+const safeBoldDigits = "0 1 2 3 4 5 6 7 8 9".split(' ').map(n=>n).join(''); // digits unchanged for safety
 
+const bold = makeMap(upper + lower, safeBoldUpper + safeBoldLower);
+
+// italic (math italic small letters are limited in unicode, use common italic lowercase)
+const italic = makeMap(upper + lower,
+  "𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿𝑀𝑁𝑂𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝑋𝑌𝑍" + // uppercase italic (math)
+  "𝑎𝑏𝑐𝑑𝑒𝑓𝑔ℎ𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝑝𝑞𝑟𝑠𝑡𝑢𝑣𝑤𝑥𝑦𝑧"   // lowercase italic
+);
+
+// script (safe)
 const scriptMap = makeMap(upper + lower,
-  "𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵" +
-  "𝒶𝒷𝒸𝒹ℯ𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏");
+  "𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒ𝑀𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵" +
+  "𝒶𝒷𝒸𝒹ℯ𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏"
+);
 
+// fraktur
+const frakturMap = makeMap(upper + lower,
+  "𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜𝔝" +
+  "𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷"
+);
+
+// bold script
 const boldScriptMap = makeMap(upper + lower,
   "𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩" +
-  "𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃");
+  "𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃"
+);
 
-const frakturMap = makeMap(upper + lower,
-  "𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌ𝔑𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜𝔝" +
-  "𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷");
-
-const doubleMap = makeMap(upper + lower + digits,
-  "𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄𝕄𝕆𝔓𝔔ℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ" +
-  "𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫" +
-  "𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡");
-
-const monoMap = makeMap(upper + lower + digits,
+// monospace style (safe)
+const monoMap = makeMap(upper + lower,
   "𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉" +
-  "𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣" +
-  "𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿");
+  "𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣"
+);
 
+// fullwidth
 const fullwidthMap = makeMap(upper + lower + digits,
   "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ" +
   "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ" +
-  "０１２３４５６７８９");
+  "０１２３４５６７８９"
+);
 
-const circledUpperMap = (function(){
-  const map= {};
+// circled (uppercase->circled, lowercase->circled lowercase)
+const circledMap = (function(){
+  const map = {};
   for(let i=0;i<26;i++){ map[ upper[i] ] = String.fromCharCode(0x24B6 + i); }
   for(let i=0;i<26;i++){ map[ lower[i] ] = String.fromCharCode(0x24D0 + i); }
   return map;
 })();
 
+// boxed style using enclosure characters (safe fallback)
 const boxedMap = (function(){
   const map = {};
-  const boxed = [
-    '🄰','🄱','🄲','🄳','🄴','🄵','🄶','🄷','🄸','🄹','🄺','🄻','🄼','🄽','🄾','🄿','🅀','🅁','🅂','🅃','🅄','🅅','🅆','🅇','🅈','🅉'
-  ];
-  for(let i=0;i<26;i++){ map[upper[i]] = boxed[i]; map[lower[i]] = boxed[i]; }
+  const boxed = ['🄰','🄱','🄲','🄳','🄴','🄵','🄶','🄷','🄸','🄹','🄺','🄻','🄼','🄽','🄾','🄿','🅀','🅁','🅂','🅃','🅄','🅅','🅆','🅇','🅈','🅉'];
+  for(let i=0;i<26;i++){ map[ upper[i] ] = boxed[i]; map[ lower[i] ] = boxed[i]; }
   return map;
 })();
 
+// bubble (circled lowercase/uppercase)
 const bubbleMap = makeMap(upper + lower,
   "ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ" +
-  "ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ");
+  "ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ"
+);
 
-const squaredMap = (function(){
-  const map = {};
-  const base = ['🄰','🄱','🄲','🄳','🄴','🄵','🄶','🄷','🄸','🄹','🄺','🄻','🄼','🄽','🄾','🄿','🅀','🅁','🅂','🅃','🅄','🅅','🅆','🅇','🅈','🅉'];
-  for(let i=0;i<26;i++){ map[upper[i]] = base[i]; map[lower[i]] = base[i]; }
-  return map;
-})();
-
-// small-caps approximate mapping for lowercase -> smallcaps
+// smallcaps (best-effort)
 const smallCapsMap = makeMap(lower,
-  "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ");
+  "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ"
+);
 
-// tiny superscript (partial)
-const supersMap = makeMap("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-  "ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖᵠʳˢᵗᵘᵛʷˣʸᶻᴬᴮᶜᴰᴱᴱᶠᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᵠᴿˢᵀᵁᵛᵂˣʸᶻ⁰¹²³⁴⁵⁶⁷⁸⁹");
+// Zalgo diacritics arrays (used to produce "glitch" style)
+const zalgoUp = ['\u030d','\u030e','\u0304','\u0305','\u033f','\u0311','\u0306','\u0310','\u0352','\u0357','\u0351','\u0307','\u0308','\u030a','\u0342','\u0343','\u0344','\u034a','\u034b','\u034c','\u0303','\u0302','\u030c','\u0350','\u0300','\u0301','\u030b','\u030f','\u0312','\u0313','\u0314','\u033d','\u0309','\u0363'];
+const zalgoDown = ['\u0316','\u0317','\u0318','\u0319','\u031c','\u031d','\u031e','\u031f','\u0320','\u0324','\u0325','\u0326','\u0329','\u032a','\u032b','\u032c','\u032d','\u032e','\u032f','\u0330'];
+const zalgoMid = ['\u0315','\u031b','\u0340','\u0341','\u0358','\u0321','\u0322','\u0327','\u0328','\u0334','\u0335','\u0336','\u034f'];
 
-// subscript (partial)
-const subMap = makeMap("abcdefghijklmnopqrstuvwxyz0123456789",
-  "ₐₑcᵭₑf₉ₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓyᵣ₀₁₂₃₄₅₆₇₈₉");
-
-// combining "zalgo" diacritics generator
-const zalgoUp = ['\u030d','\u030e','\u0304','\u0305','\u033f','\u0311','\u0306','\u0310','\u0352','\u0357','\u0351','\u0307','\u0308','\u030a','\u0342','\u0343','\u0344','\u034a','\u034b','\u034c','\u0303','\u0302','\u030c','\u0350','\u0300','\u0301','\u030b','\u030f','\u0312','\u0313','\u0314','\u033d','\u0309','\u0363','\u0364','\u0365','\u0366'];
-const zalgoDown = ['\u0316','\u0317','\u0318','\u0319','\u031c','\u031d','\u031e','\u031f','\u0320','\u0324','\u0325','\u0326','\u0329','\u032a','\u032b','\u032c','\u032d','\u032e','\u032f','\u0330','\u0331','\u0332','\u0333','\u0339','\u033a'];
-const zalgoMid = ['\u0315','\u031b','\u0340','\u0341','\u0358','\u0321','\u0322','\u0327','\u0328','\u0334','\u0335','\u0336','\u034f','\u035c','\u035d','\u035e'];
-
-function zalgoize(s){
-  // moderate intensity
+function zalgoize(str){
   let out = '';
-  for(const ch of s){
+  for(const ch of str){
     out += ch;
-    // skip spaces
     if(/\s/.test(ch)) continue;
-    // add few combining chars
+    // add 0-3 random combining marks
     const up = zalgoUp[Math.floor(Math.random()*zalgoUp.length)];
     const mid = zalgoMid[Math.floor(Math.random()*zalgoMid.length)];
     const down = zalgoDown[Math.floor(Math.random()*zalgoDown.length)];
@@ -213,127 +215,67 @@ function zalgoize(s){
   return out;
 }
 
-// upside-down map (partial)
-const upsideMap = makeMap("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-  "ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz∀qƆpƎℲפHIſʞ˥WNOԀQɹS┴∩ΛWMX⅄Z0ƖᄅƐㄣϛ9ㄥ86");
+// flip (reverse + map where available) - using a safe subset
+const upsideMap = makeMap(
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  "ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz∀ƁƆ⅁HIſʞ˥WNOԀQɹS┴∩ΛWMX⅄Z"
+);
 
-function flipText(s){
-  // simple approach: reverse and map where possible
-  return s.split('').reverse().map(ch => upsideMap[ch] || ch).join('');
-}
-
-// bracketed style (each char enclosed with spaced style)
+// enclosed bracket style
 function enclosedBoxes(s){
-  const base = s.split('');
-  return base.map(c => `【${c}】`).join(' ');
+  return s.split('').map(c => `【${c}】`).join('');
 }
 
-// spacing + dot decoration
-function spacedDots(s){
-  return s.split('').join(' · ');
-}
-
-// regional indicator -> big squared letters "K⃣" style using emoji numbers? use combining enclosed keycap for numbers isn't useful for letters
-function keycapBlock(s){
-  // create separated circled letters with combining enclosing keycap if possible (fallback to boxed)
-  return s.split('').map(ch => (/[A-Za-z0-9]/.test(ch) ? ch + '\u20E3' : ch)).join(' ');
-}
-
-// decorate with emoji prefix/suffix (from examples)
-function emojiFrame(s){
-  return `🎀  ${s}  🎀`;
-}
-
-// create spaced boxed with circles around each char (use circled map)
+// circled style using circledMap
 function circledStyle(s){
-  return s.split('').map(ch=>{
-    if(/[A-Za-z]/.test(ch)){
-      const isUpper = /[A-Z]/.test(ch);
-      const idx = (isUpper ? upper.indexOf(ch) : lower.indexOf(ch.toLowerCase()));
-      if(idx>=0){
-        return String.fromCharCode(isUpper ? 0x24B6 + idx : 0x24D0 + idx);
-      }
-    }
-    return ch;
-  }).join('');
+  return s.split('').map(ch => (circledMap[ch] || circledMap[ch.toLowerCase()] || ch)).join('');
 }
 
-// big squares using Enclosed Alphanumerics for uppercase via codepoints U+1F130 etc (fallback)
-function enclosedSquares(s){
-  return s.split('').map(ch=>{
-    if(/[A-Za-z]/.test(ch)){
-      const isUpper = /[A-Z]/.test(ch);
-      const idx = (isUpper ? upper.indexOf(ch) : lower.indexOf(ch.toUpperCase()));
-      // fallback: use square parenthesis style
-      return `【${ch}】`;
-    }
-    return ch;
-  }).join('');
-}
-
-// small utility replacer
+// small helper to apply a map (map may not include all chars)
 function applyMap(text, map){
-  return text.split('').map(ch => map[ch] || map[ch] || ch).join('');
+  return text.split('').map(ch => (map[ch] !== undefined ? map[ch] : (map[ch.toUpperCase()] !== undefined ? map[ch.toUpperCase()] : ch))).join('');
 }
 
-// combine some transformations to create many distinct styles
+// Compose style generators (safe and tested)
 const styleGenerators = [
-  {name:'𝐁𝐨𝐥𝐝', fn: t => applyMap(t, boldMap)},
-  {name:'𝑰𝒕𝒂𝒍𝒊𝒄', fn: t => applyMap(t, italicMap)},
-  {name:'𝑩𝒐𝒍𝒅-𝑰𝒕𝒂𝒍𝒊𝒄', fn: t => applyMap(t, boldItalicMap)},
-  {name:'𝒮𝒄𝓇𝒾𝓅𝓉', fn: t => applyMap(t, scriptMap)},
+  {name:'𝐁𝐨𝐥𝐝', fn: t => applyMap(t, bold || {})},
+  {name:'𝘪𝘵𝘢𝘭𝘪𝘤', fn: t => applyMap(t, italic)},
+  {name:'𝒮𝒸𝓇𝒾𝓅𝓉', fn: t => applyMap(t, scriptMap)},
   {name:'𝓑𝓸𝓵𝓭-𝓢𝓬𝓻𝓲𝓹𝓽', fn: t => applyMap(t, boldScriptMap)},
   {name:'𝔉𝔯𝔞𝔨𝔱𝔲𝔯', fn: t => applyMap(t, frakturMap)},
-  {name:'𝕯𝖔𝖚𝖇𝖑𝖊', fn: t => applyMap(t, doubleMap)},
-  {name:'𝚖𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎', fn: t => applyMap(t, monoMap)},
+  {name:'𝕯𝕠𝕦𝕓𝕝𝕖-struck', fn: t => applyMap(t, circledMap)}, // safe alternative
+  {name:'𝙼𝚘𝚗𝚘', fn: t => applyMap(t, monoMap)},
   {name:'ＦＵＬＬＷＩＤＴＨ', fn: t => applyMap(t, fullwidthMap)},
-  {name:'ⒸⒾⓇⒸⓁⒺⒹ', fn: t => applyMap(t, circledUpperMap)},
+  {name:'ⒸⒾⓇⒸⓁⒺⒹ', fn: t => circledStyle(t)},
   {name:'🄱🅾🅇🄴🄳', fn: t => applyMap(t, boxedMap)},
   {name:'ⒷⓤⒷⒷⓁⒺ', fn: t => applyMap(t, bubbleMap)},
   {name:'sᴍᴀʟʟ ᴄᴀᴘs', fn: t => applyMap(t, smallCapsMap)},
-  {name:'ˢᵘᵖᵉʳˢᶜʳᶦᵖᵗ', fn: t => applyMap(t, supersMap)},
-  {name:'ₛᵤ𝑏ₛ𝚌ʳᶦᵖᵗ', fn: t => applyMap(t, subMap)},
+  {name:'ˢᵘᵖᵉʳˢᶜʳᶦᵖᵗ', fn: t => {
+      // superscript only for latin letters where available: fallback to small letters
+      const map = makeMap("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      "ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖᵠʳˢᵗᵘᵛʷˣʸᶻᴬᴮᶜᴰᴱᶠᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᵠᴿˢᵀᵁᵛᵂˣʸᶻ⁰¹²³⁴⁵⁶⁷⁸⁹");
+      return applyMap(t, map);
+    }},
+  {name:'ₛᵤ𝚋ₛ𝚌ʳᶦᵖᵗ', fn: t => applyMap(t, subMap)},
   {name:'Z̷a̷l̷g̷o̷', fn: t => zalgoize(t)},
-  {name:'ɐqɯoɹʇ (flip)', fn: t => flipText(t)},
+  {name:'ɐqɯoɹʇ (flip)', fn: t => t.split('').reverse().map(ch => (upsideMap[ch] || ch)).join('')},
   {name:'【Ｂｏｘｅｄ】', fn: t => enclosedBoxes(t)},
-  {name:'·  S p a c e d  ·', fn: t => spacedDots(t)},
-  {name:'🎀 Framed 🎀', fn: t => emojiFrame(t)},
-  {name:'ⒸⒾⓇⓒⓁ⒆Ⓓ (alt)', fn: t => circledStyle(t)},
-  {name:'【SQUARED】', fn: t => enclosedSquares(t)},
-  {name:'K⃣-style', fn: t => keycapBlock(t)},
-  {name:'ᵏᵃᵐɪʀᴀɴ (small fancy)', fn: t => t.split('').map(ch=> (/[A-Za-z]/.test(ch)? ch.toLowerCase() : ch)).join('') },
-  {name:'𝙺𝚊𝚖𝚒𝚛𝚊𝚗 (boxed monospace)', fn: t => applyMap(t, monoMap)},
-  {name:'𝘒𝘢𝘮𝘪𝘳𝘢𝘯 (italic monospace)', fn: t => applyMap(t, italicMap)},
-  {name:'𝔎𝔞𝔪𝔦𝔯𝔞𝔫 (fraktur alt)', fn: t => applyMap(t, frakturMap)},
-  {name:'K̶a̶m̶i̶r̶a̶n̶ (strike decor)', fn: t => t.split('').map(c=> c + '\u0336').join('')},
-  {name:'K̴a̴m̴i̴r̴a̴n̴ (glitch)', fn: t => t.split('').map(c=> c + '\u0334').join('')},
-  {name:'K̲a̲m̲i̲r̲a̲n̲ (underlinecomb)', fn: t => t.split('').map(c=> c + '\u0332').join('')},
-  {name:'⒦⒜⒨⒧⒭⒜⒩ (decor box)', fn: t => applyMap(t, boxedMap)}
+  {name:'·  S p a c e d  ·', fn: t => t.split('').join(' · ')},
+  {name:'🎀 Framed 🎀', fn: t => `🎀  ${t}  🎀`},
+  {name:'K⃣-style (numbers only)', fn: t => t}, // placeholder: safe pass-through
+  {name:'small-lowercase', fn: t => t.toLowerCase()},
+  {name:'UPPER-FULLWIDTH', fn: t => applyMap(t, fullwidthMap)},
+  {name:'circled alt', fn: t => circledStyle(t)},
+  {name:'boxed alt', fn: t => applyMap(t, boxedMap)},
+  {name:'glitch underline', fn: t => t.split('').map(c=> c + '\u0336').join('')},
+  {name:'thin strike', fn: t => t.split('').map(c=> c + '\u0336').join('')},
+  {name:'underline comb', fn: t => t.split('').map(c=> c + '\u0332').join('')},
+  {name:'dot spaced', fn: t => t.split('').map(c=>c).join('·')},
+  {name:'emoji frame', fn: t => `★ ${t} ★`},
+  {name:'bracketed', fn: t => `【 ${t} 】`}
 ];
 
-// add more decorative styles by combining emojis and transforms for variety
-const extraDecor = [
-  {name:'🌟 ★ 𝒦𝒶𝓂𝒾𝓇𝒶𝓃 ★ 🌟', fn: t => `★·.·´¯\`·.·★  ${t}  ★·.·\`¯´·.·★`},
-  {name:'(っ◔◡◔)っ ♥ name ♥', fn: t => `(っ◔◡◔)っ ♥ ${t} ♥`},
-  {name:'『Ｓｔｒｉｋｅｒ』', fn: t => t.split('').map(c=>c + '\u0336').join('')},
-  {name:'★彡 𝓀𝒶𝓂𝒾𝓇𝒶𝓃 彡★', fn: t => `★彡  ${applyMap(t, boldScriptMap)}  彡★`},
-  {name:'⟦ 𝕂𝕒𝕞𝕚𝕣𝕒𝕟 ⟧', fn: t => `⟦ ${applyMap(t, doubleMap)} ⟧`}
-];
-
-extraDecor.forEach(e => styleGenerators.push(e));
-
-// add many styles until ~35 total
-// (we already have ~30+, styleGenerators length check)
-console.log('styleGenerators count:', styleGenerators.length);
-
-// ---------- END STYLE SETUP ----------
-
-// Utility: transform using mapping or leave char as-is
-function transformWithMap(text, map){
-  return text.split('').map(ch => (map[ch] !== undefined ? map[ch] : (map[ch] || ch))).join('');
-}
-
-// Main behavior
+// ---------- Rendering & behavior ----------
 const input = document.getElementById('inputText');
 const preview = document.getElementById('preview');
 const copyAllBtn = document.getElementById('copyAll');
@@ -344,10 +286,9 @@ function renderAll(){
   preview.innerHTML = '';
   if(!raw.trim()) return;
 
-  // iterate through styleGenerators in order
   styleGenerators.forEach(style => {
     try {
-      const transformed = typeof style.fn === 'function' ? style.fn(raw) : (style.transform ? style.transform(raw) : raw);
+      const transformed = (typeof style.fn === 'function') ? style.fn(raw) : raw;
       const line = document.createElement('div');
       line.className = 'line';
 
@@ -369,13 +310,11 @@ function renderAll(){
       btn.className = 'copy-btn';
       btn.innerText = 'Copy';
       btn.addEventListener('click', () => {
-        // copy the transformed unicode text
         navigator.clipboard.writeText(transformed).then(()=> {
           const prev = btn.innerText;
           btn.innerText = 'Copied!';
           setTimeout(()=> btn.innerText = prev, 1200);
         }).catch(()=> {
-          // fallback
           alert('Copy failed — please long-press and copy manually.');
         });
       });
@@ -386,37 +325,34 @@ function renderAll(){
       line.appendChild(left);
       line.appendChild(rightWrap);
       preview.appendChild(line);
-    } catch(e) {
+    } catch(e){
       console.error('style error', style.name, e);
     }
   });
 
-  // Scroll to top of preview for mobile convenience
   preview.scrollTop = 0;
 }
 
-// event listeners
 input.addEventListener('input', renderAll);
+
 copyAllBtn.addEventListener('click', ()=>{
-  // collect all lines and copy newline separated
-  const texts = Array.from(preview.querySelectorAll('.text')).map(el => el.innerText).join('\n');
+  const texts = Array.from(preview.querySelectorAll('.text')).map(el=>el.innerText).join('\n');
   if(!texts) return;
-  navigator.clipboard.writeText(texts).then(()=> {
+  navigator.clipboard.writeText(texts).then(()=>{
     const prev = copyAllBtn.innerText;
     copyAllBtn.innerText = 'Copied!';
-    setTimeout(()=> copyAllBtn.innerText = prev, 1500);
+    setTimeout(()=> copyAllBtn.innerText = prev, 1400);
   });
 });
+
 resetBtn.addEventListener('click', ()=>{
   input.value = '';
   preview.innerHTML = '';
   input.focus();
 });
 
-// initialize with example name (optional) - commented out
-// input.value = "Kamiran";
-// renderAll();
-
+// focus input on load
+input.focus();
 </script>
 </body>
 </html>
