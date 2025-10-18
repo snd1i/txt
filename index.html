@@ -74,33 +74,31 @@ textarea {
 </head>
 <body class="min-h-screen px-4 py-8">
 
-<!-- Başlık -->
-<h1 class="header-title">🖋️🎊 بو گهورینا نافان ب جوانترین شێواز</h1>
+<h1 class="header-title">🖋️🎊 Fancy Name Maker</h1>
 
-<!-- Snapchat Butonu -->
 <a href="https://www.snapchat.com/add/k4miran.sndi?share_id=az_iUCJeD3I&locale=tr-TR" target="_blank" class="snap-btn">Add me on Snapchat 👻</a>
 
-<!-- Giriş -->
-<textarea id="nameInput" placeholder="نافێ خو ل فێرێ بنفیسە"></textarea>
-
-<!-- Fontlar -->
+<textarea id="nameInput" placeholder="Type your name"></textarea>
 <div id="fontsList"></div>
 
 <script>
 const fontsList = document.getElementById('fontsList');
 const input = document.getElementById('nameInput');
 
-// Stil şablonları
+// Fancy font alfabeleri
 const styles = [
-"𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩",
-"𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ",
-"𝒜𝐵𝒞𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿𝑀𝒩𝒪𝒫𝒬𝑅𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵",
-"𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩",
-"ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ",
-"🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉",
-"ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ",
-"ᴬᴮᶜᴰᴱᶠᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᵠᴿˢᵀᵁⱽᵂˣʸᶻ",
-"𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅"
+"𐌀𐌁𐌂𐌃𐌄𐌅Ᏽ𐋅𐌉Ꮭ𐌊𐌋𐌌𐌍Ꝋ𐌐𐌒𐌓𐌔𐌕𐌵ᕓᏔ𐋄𐌙Ɀ",
+"ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖqʳˢᵗᵘᵛʷˣʸᶻ",
+"ₐbcdₑfgₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓyz",
+"ᏗᏰፈᎴᏋᎦᎶᏂᎥᏠᏦᏝᎷᏁᎧᎮᎤᏒᏕᏖᏬᏉᏇጀᎩፚ",
+"♥a♥b♥c♥d♥e♥f♥g♥h♥i♥j♥k♥l♥m♥n♥o♥p♥q♥r♥s♥t♥u♥v♥w♥x♥y♥z♥",
+"⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵",
+"𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷",
+"ᗩᗷᑕᗪᗴᖴǤᕼᎥᒎᛕᒪᗰᑎᗝᑭɊᖇᔕ丅ᑌᐯᗯ᙭Ƴ乙",
+"𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳",
+"ꋬꃳꉔ꒯ꏂꊰꍌꁝ꒐꒻ꀘ꒒ꂵꋊꄲꉣꆰꋪꇙ꓄꒤꒦ꅐꉧꌦꁴ",
+"คც८ძ૯Բ૭ҺɿʆқՆɱՈ૦ƿҩՐς੮υ౮ω૪עઽ",
+"𝐚𝐛ςĐᵉ𝔣ⓖħ𝕚ᒎ𝓚ŁⓂ𝐍ό𝐩ợŘⓈ𝐓𝐔ᐯ𝐰𝕩ү𝔷"
 ];
 
 function applyStyle(name, style) {
@@ -109,10 +107,10 @@ function applyStyle(name, style) {
     for(let i = 0; i < name.length; i++) {
         const c = name[i];
         const index = alphabet.indexOf(c);
-        if(index !== -1) {
+        if(index !== -1){
             result += style[index % style.length];
         } else {
-            result += c;
+            result += c; // Latin olmayan karakterler olduğu gibi kalacak
         }
     }
     return result;
