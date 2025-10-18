@@ -3,128 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fancy Text Wizard ✨</title>
+<title>Fancy Text Generator ✨</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/feather-icons"></script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pacifico&display=swap');
 
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Lobster&family=Dancing+Script&family=Monoton&family=Montez&family=Orbitron&family=Rubik+Mono+One&family=Raleway&family=Press+Start+2P&family=Amatic+SC&family=Fredoka+One&family=Cinzel+Decorative&family=Great+Vibes&family=Kaushan+Script&family=Shadows+Into+Light&family=Satisfy&family=Varela+Round&family=Patrick+Hand&family=Quicksand&family=Roboto+Slab&family=Josefin+Sans&family=Kalam&family=Caveat&family=Oleo+Script&family=Sacramento&family=Indie+Flower&family=Comfortaa&family=Arizonia&family=Bangers&family=Rock+Salt&family=Orbitron&family=Monoton&display=swap" rel="stylesheet">
+
+<style>
 body {
     font-family: 'Poppins', sans-serif;
     background: #f3f4f6;
+    padding: 20px;
 }
 
-.text-shadow {
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
 }
 
 .fancy-preview {
-    min-height: 100px;
+    margin-top: 20px;
+}
+
+.fancy-line {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
     background: #fff;
-    border-radius: 12px;
-    padding: 20px;
     border: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 1.5rem;
     transition: all 0.3s ease;
-}
-
-.fade-in {
-    animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1;}
 }
 
 button {
-    transition: all 0.3s ease;
+    transition: all 0.3s;
 }
+
+button:hover { transform: scale(1.05); }
 </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-6">
+<body>
 
-<header class="text-center mb-10">
-    <h1 class="text-5xl font-bold text-purple-600 text-shadow mb-3">Fancy Text Wizard ✨</h1>
-    <p class="text-gray-600 max-w-md mx-auto">Turn your plain text into stylish, magical fonts in one click!</p>
+<header class="text-center mb-8">
+    <h1 class="text-5xl font-bold text-purple-600 mb-2">Fancy Text Generator ✨</h1>
+    <p class="text-gray-600">Type your text and see it magically in 30+ modern fonts!</p>
 </header>
 
-<div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-3xl">
-    <!-- Input -->
-    <div class="mb-6">
-        <label class="font-semibold text-gray-700 mb-2 block">Enter Your Text</label>
-        <textarea id="inputText" rows="4" class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-purple-400" placeholder="Type your magical text..."></textarea>
-    </div>
+<!-- Input -->
+<textarea id="inputText" rows="3" placeholder="Type your text here..."></textarea>
 
-    <!-- Styles -->
-    <div class="mb-6">
-        <label class="font-semibold text-gray-700 mb-2 block">Choose Style</label>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <button onclick="applyStyle('bold')" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg py-2 hover:scale-105">Bold</button>
-            <button onclick="applyStyle('italic')" class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg py-2 hover:scale-105">Italic</button>
-            <button onclick="applyStyle('underline')" class="bg-gradient-to-r from-green-400 to-teal-500 text-white rounded-lg py-2 hover:scale-105">Underline</button>
-            <button onclick="applyStyle('strikethrough')" class="bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-lg py-2 hover:scale-105">Strikethrough</button>
-            <button onclick="applyStyle('smallcaps')" class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-lg py-2 hover:scale-105">Small Caps</button>
-            <button onclick="applyStyle('reverse')" class="bg-gradient-to-r from-gray-400 to-gray-600 text-white rounded-lg py-2 hover:scale-105">Reverse</button>
-            <button onclick="applyStyle('fancyFont')" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg py-2 hover:scale-105">Pacifico</button>
-        </div>
-    </div>
+<!-- Preview -->
+<div id="preview" class="fancy-preview"></div>
 
-    <!-- Preview -->
-    <div class="mb-6">
-        <label class="font-semibold text-gray-700 mb-2 block">Preview</label>
-        <div id="preview" class="fancy-preview text-gray-500 italic fade-in">
-            Your fancy text will appear here...
-        </div>
-    </div>
-
-    <!-- Actions -->
-    <div class="flex justify-between">
-        <button onclick="copyToClipboard()" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 flex items-center">
-            <i data-feather="copy" class="mr-2"></i> Copy
-        </button>
-        <button onclick="resetAll()" class="bg-gray-300 px-6 py-2 rounded-lg hover:bg-gray-400 flex items-center">
-            <i data-feather="refresh-cw" class="mr-2"></i> Reset
-        </button>
-    </div>
+<!-- Actions -->
+<div class="flex justify-start gap-4 mt-4">
+    <button onclick="copyToClipboard()" class="bg-purple-600 text-white px-6 py-2 rounded-lg flex items-center">
+        <i data-feather="copy" class="mr-2"></i> Copy All
+    </button>
+    <button onclick="resetAll()" class="bg-gray-300 px-6 py-2 rounded-lg flex items-center">
+        <i data-feather="refresh-cw" class="mr-2"></i> Reset
+    </button>
 </div>
 
 <script>
 feather.replace();
 
-function applyStyle(styleType) {
-    const inputText = document.getElementById('inputText').value;
-    const preview = document.getElementById('preview');
-    if(!inputText){
-        preview.innerHTML = '<span class="text-gray-400 italic">Please enter some text first!</span>';
-        return;
-    }
-    let transformed = inputText;
-    switch(styleType){
-        case 'bold': transformed = `<strong>${inputText}</strong>`; break;
-        case 'italic': transformed = `<em>${inputText}</em>`; break;
-        case 'underline': transformed = `<u>${inputText}</u>`; break;
-        case 'strikethrough': transformed = `<s>${inputText}</s>`; break;
-        case 'smallcaps': transformed = inputText.toUpperCase(); break;
-        case 'reverse': transformed = inputText.split('').reverse().join(''); break;
-        case 'fancyFont': transformed = `<span style="font-family: 'Pacifico', cursive; font-size: 1.5rem;">${inputText}</span>`; break;
-        default: transformed = inputText;
-    }
-    preview.innerHTML = transformed;
-}
+const fonts = [
+    'Pacifico','Lobster','Dancing Script','Monoton','Montez','Orbitron','Rubik Mono One',
+    'Raleway','Press Start 2P','Amatic SC','Fredoka One','Cinzel Decorative','Great Vibes',
+    'Kaushan Script','Shadows Into Light','Satisfy','Varela Round','Patrick Hand',
+    'Quicksand','Roboto Slab','Josefin Sans','Kalam','Caveat','Oleo Script','Sacramento',
+    'Indie Flower','Comfortaa','Arizonia','Bangers','Rock Salt'
+];
+
+const input = document.getElementById('inputText');
+const preview = document.getElementById('preview');
+
+input.addEventListener('input', () => {
+    const text = input.value.trim();
+    preview.innerHTML = '';
+    if(!text) return;
+
+    fonts.forEach(font => {
+        const line = document.createElement('div');
+        line.className = 'fancy-line';
+        line.style.fontFamily = font;
+        line.innerText = text;
+        preview.appendChild(line);
+    });
+});
 
 function copyToClipboard(){
-    const preview = document.getElementById('preview');
-    const text = preview.innerText || preview.textContent;
-    navigator.clipboard.writeText(text);
-    alert("Text copied to clipboard!");
+    let allText = '';
+    document.querySelectorAll('.fancy-line').forEach(line => {
+        allText += line.innerText + '\n';
+    });
+    navigator.clipboard.writeText(allText);
+    alert("All text copied to clipboard!");
 }
 
 function resetAll(){
-    document.getElementById('inputText').value = '';
-    document.getElementById('preview').innerHTML = 'Your fancy text will appear here...';
+    input.value = '';
+    preview.innerHTML = '';
 }
 </script>
 
