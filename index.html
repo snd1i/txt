@@ -7,13 +7,14 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/feather-icons"></script>
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Lobster&family=Dancing+Script&family=Monoton&family=Montez&family=Orbitron&family=Rubik+Mono+One&family=Raleway&family=Press+Start+2P&family=Amatic+SC&family=Fredoka+One&family=Cinzel+Decorative&family=Great+Vibes&family=Kaushan+Script&family=Shadows+Into+Light&family=Satisfy&family=Varela+Round&family=Patrick+Hand&family=Quicksand&family=Roboto+Slab&family=Josefin+Sans&family=Kalam&family=Caveat&family=Oleo+Script&family=Sacramento&family=Indie+Flower&family=Comfortaa&family=Arizonia&family=Bangers&family=Rock+Salt&family=Orbitron&family=Monoton&display=swap" rel="stylesheet">
+<!-- Google Fonts (karmaşık ve modern fontlar) -->
+<link href="https://fonts.googleapis.com/css2?family=Monoton&family=Orbitron&family=Press+Start+2P&family=Righteous&family=Unica+One&family=Special+Elite&family=Black+Ops+One&family=Bungee+Inline&family=Bungee+Shade&family=Sigmar+One&family=Ewert&family=Nosifer&family=Rock+Salt&family=Fugaz+One&display=swap" rel="stylesheet">
 
 <style>
 body {
-    font-family: 'Poppins', sans-serif;
-    background: #f3f4f6;
+    font-family: 'Monoton', sans-serif;
+    background: #0f0f0f;
+    color: #fff;
     padding: 20px;
 }
 
@@ -21,8 +22,14 @@ textarea {
     width: 100%;
     padding: 12px;
     border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
+    border: none;
+    font-size: 1.2rem;
+    background: #1a1a1a;
+    color: #fff;
+}
+
+textarea::placeholder {
+    color: #aaa;
 }
 
 .fancy-preview {
@@ -30,27 +37,43 @@ textarea {
 }
 
 .fancy-line {
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
     border-radius: 8px;
     margin-bottom: 10px;
-    background: #fff;
-    border: 1px solid #e5e7eb;
+    background: #1a1a1a;
     font-size: 1.5rem;
     transition: all 0.3s ease;
 }
 
-button {
-    transition: all 0.3s;
+.fancy-line:hover {
+    background: #2a2a2a;
 }
 
-button:hover { transform: scale(1.05); }
+.copy-btn {
+    background: #ff4081;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: 10px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: #e73370;
+}
 </style>
 </head>
 <body>
 
-<header class="text-center mb-8">
-    <h1 class="text-5xl font-bold text-purple-600 mb-2">Fancy Text Generator ✨</h1>
-    <p class="text-gray-600">Type your text and see it magically in 30+ modern fonts!</p>
+<header class="text-center mb-6">
+<h1 class="text-4xl font-bold text-pink-500 mb-2">Fancy Text Generator ✨</h1>
+<p class="text-gray-400">Type your text and see it in 15+ crazy modern fonts!</p>
 </header>
 
 <!-- Input -->
@@ -59,30 +82,20 @@ button:hover { transform: scale(1.05); }
 <!-- Preview -->
 <div id="preview" class="fancy-preview"></div>
 
-<!-- Actions -->
-<div class="flex justify-start gap-4 mt-4">
-    <button onclick="copyToClipboard()" class="bg-purple-600 text-white px-6 py-2 rounded-lg flex items-center">
-        <i data-feather="copy" class="mr-2"></i> Copy All
-    </button>
-    <button onclick="resetAll()" class="bg-gray-300 px-6 py-2 rounded-lg flex items-center">
-        <i data-feather="refresh-cw" class="mr-2"></i> Reset
-    </button>
-</div>
-
 <script>
 feather.replace();
 
+// Modern/karmaşık fontlar
 const fonts = [
-    'Pacifico','Lobster','Dancing Script','Monoton','Montez','Orbitron','Rubik Mono One',
-    'Raleway','Press Start 2P','Amatic SC','Fredoka One','Cinzel Decorative','Great Vibes',
-    'Kaushan Script','Shadows Into Light','Satisfy','Varela Round','Patrick Hand',
-    'Quicksand','Roboto Slab','Josefin Sans','Kalam','Caveat','Oleo Script','Sacramento',
-    'Indie Flower','Comfortaa','Arizonia','Bangers','Rock Salt'
+    'Monoton','Orbitron','Press Start 2P','Righteous','Unica One','Special Elite',
+    'Black Ops One','Bungee Inline','Bungee Shade','Sigmar One','Ewert','Nosifer',
+    'Rock Salt','Fugaz One'
 ];
 
 const input = document.getElementById('inputText');
 const preview = document.getElementById('preview');
 
+// Her fontta satır oluştur
 input.addEventListener('input', () => {
     const text = input.value.trim();
     preview.innerHTML = '';
@@ -92,24 +105,24 @@ input.addEventListener('input', () => {
         const line = document.createElement('div');
         line.className = 'fancy-line';
         line.style.fontFamily = font;
-        line.innerText = text;
+
+        const span = document.createElement('span');
+        span.innerText = text;
+
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.innerText = 'Copy';
+        btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(text);
+            btn.innerText = 'Copied!';
+            setTimeout(() => btn.innerText = 'Copy', 1500);
+        });
+
+        line.appendChild(span);
+        line.appendChild(btn);
         preview.appendChild(line);
     });
 });
-
-function copyToClipboard(){
-    let allText = '';
-    document.querySelectorAll('.fancy-line').forEach(line => {
-        allText += line.innerText + '\n';
-    });
-    navigator.clipboard.writeText(allText);
-    alert("All text copied to clipboard!");
-}
-
-function resetAll(){
-    input.value = '';
-    preview.innerHTML = '';
-}
 </script>
 
 </body>
