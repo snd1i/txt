@@ -1,161 +1,583 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fancy Name & Number Maker</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap');
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mini Oyunlar - Telegram WebApp</title>
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #000;
-    color: #fff;
-}
-.header-title {
-    font-family: 'Pacifico', cursive;
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 0.5rem;
-    color: #ff69b4;
-}
-.snap-btn {
-    display: block;
-    width: 220px;
-    margin: 0 auto 2rem auto;
-    text-align: center;
-    background: linear-gradient(90deg, #fffc00, #ff00ff);
-    color: #000;
-    font-weight: bold;
-    padding: 0.7rem 1rem;
-    border-radius: 12px;
-    text-decoration: none;
-    transition: transform 0.2s ease;
-}
-.snap-btn:hover {
-    transform: scale(1.05);
-}
-textarea {
-    width: 100%;
-    padding: 1rem;
-    border-radius: 12px;
-    border: none;
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    color: #000;
-    background-color: #fff;
-}
-.font-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.6rem 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 8px;
-    background: #111;
-    transition: background 0.2s;
-}
-.font-item:hover {
-    background: #222;
-}
-.copy-btn {
-    background: #ff69b4;
-    color: #000;
-    font-weight: bold;
-    border: none;
-    padding: 0.3rem 0.6rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.copy-btn:hover {
-    background: #ff1493;
-}
+<!-- Telegram WebApp kütüphanesi (WebApp olarak Telegram içinden açıldığında kullanılacak) -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+  /* ---------- DARK THEME STYLES ---------- */
+  :root{
+    --bg:#0b0f13;
+    --card:#0f1720;
+    --muted:#98a0ad;
+    --accent:#7c3aed; /* mor vurgu */
+    --accent-2:#06b6d4;
+    --glass: rgba(255,255,255,0.03);
+  }
+  html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,system-ui,-apple-system,"Helvetica Neue",Arial;color:#e6eef6;background:linear-gradient(180deg,var(--bg),#071018);-webkit-font-smoothing:antialiased}
+  .app{
+    max-width:980px;margin:18px auto;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow: 0 6px 24px rgba(2,6,23,0.6);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+
+  header{display:flex;gap:14px;align-items:center}
+  .avatar{
+    width:72px;height:72px;border-radius:50%;background:#081018;display:flex;align-items:center;justify-content:center;font-weight:700;border:2px solid rgba(255,255,255,0.04);overflow:hidden;
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover}
+  .meta{flex:1}
+  .meta h1{margin:0;font-size:18px}
+  .meta p{margin:2px 0 0 0;color:var(--muted);font-size:13px}
+
+  nav{display:flex;gap:10px;margin-top:14px}
+  .tab{
+    padding:8px 12px;border-radius:10px;background:var(--card);cursor:pointer;border:1px solid rgba(255,255,255,0.02);font-weight:600;
+  }
+  .tab.active{background:linear-gradient(90deg, rgba(124,58,237,0.15), rgba(6,182,212,0.08));box-shadow:0 6px 18px rgba(7,10,22,0.6);border:1px solid rgba(124,58,237,0.22);}
+
+  main{margin-top:18px}
+  .panel{display:none}
+  .panel.active{display:block}
+
+  /* Card */
+  .card{background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);}
+
+  /* Inputs */
+  .row{display:flex;gap:8px;align-items:center;margin-top:10px}
+  input[type=text]{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+  button{padding:10px 12px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:700;cursor:pointer}
+  .muted{color:var(--muted);font-size:13px}
+
+  /* Wheel style (list-based) */
+  .names-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .name-pill{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.02)}
+  .highlight{box-shadow:0 6px 18px rgba(124,58,237,0.18);border:1px solid rgba(124,58,237,0.3);transform:scale(1.05)}
+
+  /* Fruit grid */
+  .fruits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:12px;margin-top:12px}
+  .fruit{padding:12px;border-radius:10px;text-align:center;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
+  .fruit .emoji{font-size:36px;display:block}
+  .popped{opacity:0.12;transform:scale(0.92);text-decoration:line-through}
+
+  .countdown{font-size:28px;font-weight:800;color:var(--accent);margin-top:8px}
+
+  /* TicTacToe */
+  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px}
+  .cell{aspect-ratio:1/1;background:var(--glass);display:flex;align-items:center;justify-content:center;font-size:36px;border-radius:8px;cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
+  .info{margin-top:10px;color:var(--muted)}
+  .small{font-size:13px}
+
+  /* Confetti simple */
+  .confetti{position:fixed;left:50%;top:10%;transform:translateX(-50%);pointer-events:none;z-index:1000}
+  .confetti span{display:inline-block;width:8px;height:12px;background:var(--accent);margin:2px;animation:fall 1s linear forwards}
+  @keyframes fall{from{opacity:1;transform:translateY(-10px) rotate(0deg)} to{opacity:0;transform:translateY(60px) rotate(180deg)}}
+
+  /* Responsive */
+  @media (max-width:520px){
+    .app{margin:10px;padding:12px}
+    header{gap:10px}
+    .avatar{width:60px;height:60px}
+  }
 </style>
 </head>
-<body class="min-h-screen px-4 py-8">
+<body>
+  <div class="app">
+    <!-- HEADER -->
+    <header>
+      <div class="avatar" id="avatar">
+        <!-- profil foto buraya gelecek -->
+        <span id="avatarInitial">K</span>
+      </div>
+      <div class="meta">
+        <h1 id="displayName">Telegram Kullanıcısı</h1>
+        <p id="displayUsername" class="muted">@username</p>
+      </div>
+      <div style="text-align:right">
+        <div class="muted small">Bot: <b>@psyar_bot</b></div>
+        <div class="small muted">Tema: Dark</div>
+      </div>
+    </header>
 
-<h1 class="header-title">🖋️🎊 Fancy Name & Number Maker</h1>
+    <!-- NAV / TABS -->
+    <nav>
+      <div class="tab active" data-tab="wheel">🎯 Karar Çarkı</div>
+      <div class="tab" data-tab="fruits">🍉 Meyve Patlat</div>
+      <div class="tab" data-tab="xoxo">❌ XOXO (2 Kişilik)</div>
+    </nav>
 
-<a href="https://www.snapchat.com/add/k4miran.sndi?share_id=az_iUCJeD3I&locale=tr-TR" target="_blank" class="snap-btn">Add me on Snapchat 👻</a>
+    <main>
+      <!-- WARNING PANEL (shows if not opened via Telegram) -->
+      <div id="notTelegramWarning" class="card" style="margin-top:12px;display:none">
+        <strong>⚠️ Bu sayfa Telegram üzerinden açılmalıdır.</strong>
+        <p class="muted small">Lütfen şu linki Telegram uygulamasında açın: <br><code>https://t.me/psyar_bot/app?startapp=oyunlar</code></p>
+      </div>
 
-<textarea id="nameInput" placeholder="Type your name or numbers"></textarea>
-<div id="fontsList"></div>
+      <!-- WHEEL PANEL -->
+      <section id="wheel" class="panel active">
+        <div class="card">
+          <h3>🎯 Karar Çarkı</h3>
+          <p class="muted small">İsimleri ekle, sonra "Çarkı Çevir"e bas. Basit görsel seçim animasyonu vardır.</p>
+
+          <div class="row">
+            <input id="nameInput" placeholder="İsim gir (örn: Ali)" />
+            <button id="addNameBtn">Ekle</button>
+            <button id="clearNamesBtn" style="background:#333">Temizle</button>
+          </div>
+          <div class="names-list card" id="namesList" style="margin-top:10px"></div>
+
+          <div class="row" style="margin-top:12px">
+            <button id="spinBtn" style="flex:1">🎡 Çarkı Çevir</button>
+          </div>
+
+          <div id="wheelResult" style="margin-top:12px;font-size:18px;font-weight:800;color:var(--accent)"></div>
+        </div>
+      </section>
+
+      <!-- FRUITS PANEL -->
+      <section id="fruits" class="panel">
+        <div class="card">
+          <h3>🍉 Meyve Patlatma</h3>
+          <p class="muted small">İsimler rastgele meyvelerin içine saklanır. Otomatik modda meyveler tek tek patlar; her patlamadan sonra 3 saniye geri sayım olur. Manuel modda kullanıcı tıklayarak patlatır.</p>
+
+          <div class="row">
+            <input id="namesInputFruits" placeholder="İsimleri virgülle ayır (Ali,Ayşe,Mehmet)" />
+            <button id="assignFruitsBtn">İsimleri Ata</button>
+          </div>
+
+          <div style="margin-top:10px">
+            <label class="muted small">Mod:</label>
+            <select id="fruitMode">
+              <option value="manual">Manuel</option>
+              <option value="auto">Otomatik</option>
+            </select>
+            <button id="startAutoBtn" style="margin-left:8px">Otomatik Başlat</button>
+          </div>
+
+          <div class="countdown" id="fruitCountdown" style="display:none">3</div>
+
+          <div class="fruits-grid" id="fruitsGrid" style="margin-top:12px"></div>
+
+          <div id="fruitWinner" style="margin-top:12px;font-size:18px;font-weight:800;color:var(--accent)"></div>
+        </div>
+      </section>
+
+      <!-- XOXO PANEL -->
+      <section id="xoxo" class="panel">
+        <div class="card">
+          <h3>❌ Tic-Tac-Toe (XOXO)</h3>
+          <p class="muted small">2 kişi oyuncunun bir link paylaşması ile oynayabilir. Paylaşılacak link, Telegram üzerinden açılmalı: <br><code>https://t.me/psyar_bot/app?startapp=xoxo_{ODA_KODU}</code></p>
+
+          <div class="row">
+            <input id="nickname" placeholder="Kendi takma adın (örn: Kamiran)" />
+            <button id="createRoomBtn">Oda Oluştur & Link Al</button>
+          </div>
+
+          <div style="margin-top:10px" id="roomBox" class="muted small"></div>
+
+          <div class="card" style="margin-top:12px">
+            <div class="info">Sıra: <span id="turnInfo">-</span></div>
+            <div class="board" id="board">
+              <div class="cell" data-i="0"></div>
+              <div class="cell" data-i="1"></div>
+              <div class="cell" data-i="2"></div>
+              <div class="cell" data-i="3"></div>
+              <div class="cell" data-i="4"></div>
+              <div class="cell" data-i="5"></div>
+              <div class="cell" data-i="6"></div>
+              <div class="cell" data-i="7"></div>
+              <div class="cell" data-i="8"></div>
+            </div>
+            <div class="info" id="winnerBox"></div>
+            <div style="margin-top:8px">
+              <button id="resetBoardBtn" style="background:#333">Yeniden Başlat</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- confetti container -->
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
 
 <script>
-const fontsList = document.getElementById('fontsList');
-const input = document.getElementById('nameInput');
+/* ----------------------
+  Genel açıklama:
+  - Bu script Telegram WebApp üzerinden açıldığında (bot içinden) tg.initDataUnsafe.user ile
+    kullanıcı bilgilerini okur ve üstte gösterir.
+  - Eğer doğrudan tarayıcıdan açılırsa #notTelegramWarning görünür.
+  - Oyun mantıkları: 
+      1) Wheel: basit ad pill'leri arasından dönen seçim animasyonu.
+      2) Fruits: her isim rastgele emoji meyveye atanır; manuel veya otomatik pop.
+      3) XOXO: local olarak oda oluşturur; paylaşılacak link t.me/psyar_bot/app?startapp=xoxo_<odaKod>
+         (Not: tam gerçek-zaman multiplayer için sunucu gerekir. Burada link paylaşımıyla her iki kişi
+         aynı sayfayı açıp odadaki kodu elle girerse oyun oynanabilir. Bu sürüm "basit paylaşılabilir oda" sağlar.)
+----------------------- */
 
-// Tüm normal karakterler (harfler + rakamlar)
-const normalChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const BOT = "psyar_bot"; // bot kullanıcı adı (senden gelen bilgi)
+const DEEP_LINK_PREFIX = `https://t.me/${BOT}/app?startapp=`;
 
-// Tüm fancy diziler: harf + rakam birleştirilmiş
-const styles = [
-"ꪖ᥇ᥴᦔꫀᠻᧁꫝⅈ𝕛𝕜ꪶꪑꪀꪮρ𝕢𝕣ડ𝕥ꪊꪜ᭙᥊ꪗ𝕫0123456789",
-"a͓̽b͓̽c͓̽d͓̽e͓̽f͓̽g͓̽h͓̽i͓̽j͓̽k͓̽l͓̽m͓̽n͓̽o͓̽p͓̽q͓̽r͓̽s͓̽t͓̽u͓̽v͓̽w͓̽x͓̽y͓̽z͓̽0123456789",
-"a̷b̷c̷d̷e̷f̷g̷h̷i̷j̷k̷l̷m̷n̷o̷p̷q̷r̷s̷t̷u̷v̷w̷x̷y̷z̷0123456789",
-"ΛBᄃDΣFGΉIJKᄂMПӨPQЯƧƬЦVЩXYZ0123456789",
-"ā̤̓̍͘b̬͖̏́͢c͕͗ͤ̕̕ḑ̴̞͛̒ẹ̿͋̒̕f̵͖̜̉ͅĝ̽̓̀͑ḣ̖̻͛̓ỉ͔͖̜͌j̪̟̮̔ͩḳ̯͍̑ͦl̙͖̑̾ͣḿ̬̏ͤͅṇ̤͛̒̍o̯̱̊͊͢p̞̈͑̚͞q͉ͬ͋̇ͥr̴̨̦͕̝s̠҉͍͊ͅt̲̂̓ͩ̑ư̡͕̭̇v͒̄ͭ̏̇w̦̺̐̐͟x̛̘̠̹͋y҉̃̀̋̑z̼͙̓́ͭ0123456789",
-"ᥲხᥴძᥱƒgɦᎥ᧒ƙᥣꪔꪀ᥆ρqᖇ᥉ƚᥙ᥎᭙ꪎyᤁ0123456789",
-"𝖆𝖉𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖗𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝒗𝒘𝖝𝒚𝒛0123456789",
-"𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ0123456789",
-"𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯0123456789",
-"𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟0123456789",
-"𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏Ýℤ0123456789",
-"𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝑳𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙0123456789",
-"𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃0123456789",
-"𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭0123456789",
-"ᗩᗷᑕᗪᗴᖴᘜᕼIᒍKᒪᗰᑎOᑭᑫᖇՏTᑌᐯᗯ᙭Yᘔ0123456789",
-"𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝??𝘟𝘠𝘡0123456789",
-"𐌀𐌁𐌂𐌃𐌄𐌅Ᏽ𐋅𐌉Ꮭ𐌊𐌋𐌌𐌍Ꝋ𐌐𐌒𐌓𐌔𐌕𐌵ᕓᏔ𐋄𐌙Ɀ0123456789",
-"ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖqʳˢᵗᵘᵛʷˣʸᶻ0123456789",
-"ₐbcdₑfgₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓyz0123456789",
-"ᏗᏰፈᎴᏋᎦᎶᏂᎥᏠᏦᏝᎷᏁᎧᎮᎤᏒᏕᏖᏬᏉᏇጀᎩፚ0123456789",
-"♥a♥b♥c♥d♥e♥f♥g♥h♥i♥j♥k♥l♥m♥n♥o♥p♥q♥r♥s♥t♥u♥v♥w♥x♥y♥z♥0123456789",
-"⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵0123456789",
-"𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789"
-];
+/* ---------- Telegram init ---------- */
+let tg = window.Telegram?.WebApp;
+let user = null;
 
-function applyStyle(name, style) {
-    let result = '';
-    for (let i = 0; i < name.length; i++) {
-        const c = name[i];
-        const index = normalChars.indexOf(c);
-        if (index !== -1) {
-            result += style[index % style.length];
-        } else {
-            result += c;
-        }
+// Güvenli olarak çalışmak için
+function onReadyFromTelegram(){
+  try {
+    tg.ready();
+    // initDataUnsafe içeriyorsa, we can read user data (photo_url may be undefined).
+    const init = tg.initDataUnsafe || {};
+    user = init.user || null;
+    if(user){
+      showUser(user);
+      document.getElementById("notTelegramWarning").style.display = "none";
+    } else {
+      // Tarayıcıdan açılıp Telegram bilgisi yok
+      document.getElementById("notTelegramWarning").style.display = "block";
     }
-    return result;
+  } catch(e){
+    console.warn("Telegram WebApp not available:", e);
+    document.getElementById("notTelegramWarning").style.display = "block";
+  }
 }
 
-function renderFonts() {
-    const name = input.value || "";
-    fontsList.innerHTML = '';
-    styles.forEach(style => {
-        const div = document.createElement('div');
-        div.className = 'font-item';
-        const span = document.createElement('span');
-        span.textContent = applyStyle(name, style);
-        const btn = document.createElement('button');
-        btn.className = 'copy-btn';
-        btn.textContent = 'Copy';
-        btn.onclick = () => {
-            navigator.clipboard.writeText(span.textContent);
-            btn.textContent = 'Copied!';
-            setTimeout(() => btn.textContent = 'Copy', 1000);
-        };
-        div.appendChild(span);
-        div.appendChild(btn);
-        fontsList.appendChild(div);
+// Eğer Telegram yoksa uyar
+if (window.Telegram && window.Telegram.WebApp) {
+  onReadyFromTelegram();
+} else {
+  // 1 saniye sonra tekrar dene (bazı durumlarda yavaş yüklenir)
+  setTimeout(()=>{ if (window.Telegram && window.Telegram.WebApp) onReadyFromTelegram(); else document.getElementById("notTelegramWarning").style.display = "block"; }, 800);
+}
+
+function showUser(u){
+  const name = (u.first_name || "") + (u.last_name ? (" " + u.last_name) : "");
+  document.getElementById("displayName").innerText = name || "Telegram Kullanıcısı";
+  document.getElementById("displayUsername").innerText = u.username ? ("@" + u.username) : "";
+  const avatar = document.getElementById("avatar");
+  const avatarInitial = document.getElementById("avatarInitial");
+  if(u.photo_url){
+    avatar.innerHTML = `<img src="${u.photo_url}" alt="avatar">`;
+  } else {
+    avatarInitial.innerText = (u.first_name||"K").slice(0,1).toUpperCase();
+  }
+}
+
+/* ---------- Tabs ---------- */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const target = t.dataset.tab;
+    document.querySelectorAll('.panel').forEach(p=>{
+      if(p.id===target) p.classList.add('active'); else p.classList.remove('active');
     });
+  });
+});
+
+/* ----------------- GAME 1: Wheel (basit seçim) ----------------- */
+let wheelNames = [];
+const namesListEl = document.getElementById('namesList');
+const nameInput = document.getElementById('nameInput');
+
+function renderNames(){
+  namesListEl.innerHTML = "";
+  wheelNames.forEach((n, idx)=>{
+    const el = document.createElement('div');
+    el.className = 'name-pill';
+    el.innerText = n;
+    el.dataset.idx = idx;
+    namesListEl.appendChild(el);
+  });
 }
 
-input.addEventListener('input', renderFonts);
-renderFonts();
-</script>
+document.getElementById('addNameBtn').addEventListener('click', ()=>{
+  const v = nameInput.value.trim();
+  if(!v) return;
+  wheelNames.push(v);
+  nameInput.value = "";
+  renderNames();
+});
 
+document.getElementById('clearNamesBtn').addEventListener('click', ()=>{
+  wheelNames = [];
+  renderNames();
+  document.getElementById('wheelResult').innerText = "";
+});
+
+document.getElementById('spinBtn').addEventListener('click', async ()=>{
+  if(wheelNames.length===0){ alert("Lütfen en az 1 isim ekleyin."); return;}
+  const resultEl = document.getElementById('wheelResult');
+  resultEl.innerText = "";
+
+  // Simüle edilmiş dönen seçim (listede hızlıca highlight yap)
+  const pills = Array.from(namesListEl.children);
+  let cycles = 36 + Math.floor(Math.random()*36); // kaç kere dönecek
+  let idx = 0;
+  for(let i=0;i<cycles;i++){
+    pills.forEach(p=>p.classList.remove('highlight'));
+    const p = pills[idx % pills.length];
+    p.classList.add('highlight');
+    await new Promise(r=>setTimeout(r, 40 + Math.min(i, 120))); // yavaşça duracak
+    idx++;
+  }
+  // Seçim:
+  const selected = wheelNames[(idx-1) % wheelNames.length];
+  resultEl.innerText = "🎉 Kazanan: " + selected;
+  // küçük konfeti
+  runConfetti();
+});
+
+/* ----------------- GAME 2: Fruit pop ----------------- */
+const fruitEmojis = ["🍎","🍌","🍉","🍓","🍑","🍍","🍇","🥭","🍒","🥝","🍐","🍊"];
+let fruitAssignments = []; // [{emoji, name, popped}]
+const fruitsGrid = document.getElementById('fruitsGrid');
+const fruitCountdown = document.getElementById('fruitCountdown');
+let autoInterval = null;
+
+function assignFruitsFromNames(input){
+  const raw = input.split(",").map(s=>s.trim()).filter(Boolean);
+  if(raw.length===0){ alert("Lütfen virgülle ayrılmış isimler girin."); return; }
+  // Her isim bir meyve
+  fruitAssignments = raw.map((n,i)=>{
+    return {emoji: fruitEmojis[i % fruitEmojis.length], name:n, popped:false};
+  });
+  renderFruits();
+}
+
+function renderFruits(){
+  fruitsGrid.innerHTML = "";
+  fruitAssignments.forEach((f, idx)=>{
+    const el = document.createElement('div');
+    el.className = 'fruit card' + (f.popped? ' popped' : '');
+    el.dataset.idx = idx;
+    el.innerHTML = `<span class="emoji">${f.emoji}</span><div style="margin-top:8px;font-weight:700">${f.name}</div>`;
+    el.addEventListener('click', ()=>{ if(document.getElementById('fruitMode').value==='manual') popFruit(idx); });
+    fruitsGrid.appendChild(el);
+  });
+  checkFruitWinner();
+}
+
+function popFruit(idx){
+  if(!fruitAssignments[idx] || fruitAssignments[idx].popped) return;
+  fruitAssignments[idx].popped = true;
+  renderFruits();
+  runConfetti();
+  // 3 saniye geri sayımı görselini göster (only if in auto mode the countdown will be used by auto sequence)
+}
+
+function checkFruitWinner(){
+  const remaining = fruitAssignments.filter(f=>!f.popped);
+  if(remaining.length===1){
+    document.getElementById('fruitWinner').innerText = "🏆 Kazanan: " + remaining[0].name;
+    // otomatik interval varsa durdur
+    if(autoInterval){ clearInterval(autoInterval); autoInterval = null; fruitCountdown.style.display='none'; }
+    runConfetti(30);
+  } else if(remaining.length===0){
+    document.getElementById('fruitWinner').innerText = "Tüm meyveler patladı.";
+  } else {
+    document.getElementById('fruitWinner').innerText = "";
+  }
+}
+
+document.getElementById('assignFruitsBtn').addEventListener('click', ()=>{
+  const v = document.getElementById('namesInputFruits').value;
+  assignFruitsFromNames(v);
+});
+
+document.getElementById('startAutoBtn').addEventListener('click', ()=>{
+  if(fruitAssignments.length===0){ alert("İsimleri atayın önce."); return;}
+  if(autoInterval) { clearInterval(autoInterval); autoInterval = null; fruitCountdown.style.display='none'; return; }
+  // Otomatik başlat: sırayla rastgele meyve pop (3 sn countdown aralığı)
+  const order = fruitAssignments.map((_,i)=>i).filter(i=>!fruitAssignments[i].popped);
+  let idxCursor = 0;
+  fruitCountdown.style.display = 'block';
+  let countdown = 3;
+  fruitCountdown.innerText = countdown;
+  autoInterval = setInterval(()=>{
+    countdown--;
+    if(countdown<=0){
+      // pop next available
+      // find next non-popped index
+      let found = null;
+      for(let k=0;k<fruitAssignments.length;k++){
+        const i = Math.floor(Math.random()*fruitAssignments.length);
+        if(!fruitAssignments[i].popped){ found = i; break; }
+      }
+      // fallback: scan
+      if(found===null) {
+        for(let i=0;i<fruitAssignments.length;i++) if(!fruitAssignments[i].popped){ found = i; break; }
+      }
+      if(found!==null){
+        popFruit(found);
+      }
+      countdown = 3;
+      fruitCountdown.innerText = countdown;
+      // if winner reached, stop
+      if(fruitAssignments.filter(f=>!f.popped).length<=1){
+        clearInterval(autoInterval); autoInterval=null; fruitCountdown.style.display='none';
+      }
+    } else {
+      fruitCountdown.innerText = countdown;
+    }
+  }, 1000);
+});
+
+/* ----------------- GAME 3: TicTacToe (XOXO) ----------------- */
+/* Basit: oda oluşturur ve "oda kodu" veririz. Gerçek zamanlı sunucu yok; oyuncular
+   odayı paylaşırken t.me/psyar_bot/app?startapp=xoxo_{odaKod} kullanırlar.
+   Bu sürümde oyun lokal tutulur (LocalStorage) ve aynı odayı iki kişi manuel açıp
+   oyunu oynayabilir. Tam otomatik eşleşme için sunucu/DB gerekir. */
+const boardEls = document.querySelectorAll('.cell');
+let board = Array(9).fill(null);
+let turn = 'X';
+let roomCode = null;
+const turnInfo = document.getElementById('turnInfo');
+const winnerBox = document.getElementById('winnerBox');
+const roomBox = document.getElementById('roomBox');
+
+function renderBoard(){
+  boardEls.forEach((el,i)=>{
+    el.innerText = board[i] || "";
+  });
+  turnInfo.innerText = turn;
+}
+
+function checkWin(b){
+  const lines = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]
+  ];
+  for(const l of lines){
+    const [a,b1,c] = l;
+    if(b[a] && b[a]===b[b1] && b[a]===b[c]) return b[a];
+  }
+  if(b.every(x=>x)) return 'draw';
+  return null;
+}
+
+boardEls.forEach((el,i)=>el.addEventListener('click', ()=>{
+  if(!roomCode){ alert("Önce oda oluşturun veya odaya girin."); return; }
+  if(board[i]) return;
+  board[i] = turn;
+  const res = checkWin(board);
+  if(res){
+    if(res==='draw') winnerBox.innerText = "Berabere!";
+    else winnerBox.innerText = "Kazanan: " + res;
+  } else {
+    turn = (turn==='X') ? 'O' : 'X';
+    winnerBox.innerText = "";
+  }
+  renderBoard();
+  saveRoomState();
+}));
+
+document.getElementById('resetBoardBtn').addEventListener('click', ()=>{
+  board = Array(9).fill(null);
+  turn = 'X';
+  winnerBox.innerText = "";
+  renderBoard();
+  saveRoomState();
+});
+
+document.getElementById('createRoomBtn').addEventListener('click', ()=>{
+  // oda kodu rastgele 6 haneli
+  const nick = document.getElementById('nickname').value.trim() || (user ? ((user.first_name||'P') + (user.last_name?user.last_name:'')).substring(0,6) : 'Guest');
+  roomCode = Math.random().toString(36).slice(2,8).toUpperCase();
+  // kaydet initial state
+  board = Array(9).fill(null);
+  turn = 'X';
+  saveRoomState();
+  // link
+  const link = DEEP_LINK_PREFIX + encodeURIComponent('xoxo_' + roomCode);
+  roomBox.innerHTML = `<div>Oda oluşturuldu: <b>${roomCode}</b></div>
+    <div style="margin-top:8px" class="small muted">Paylaşmak için bu Telegram linkini kullanın (Telegram içinde açılmalıdır):<br>
+    <a href="${link}" target="_blank">${link}</a></div>
+    <div class="small muted" style="margin-top:6px">Not: Karşı taraf bu linkle açtığında aynı oda kodunu otomatik alırsa oyuna katılabilir.</div>`;
+  renderBoard();
+});
+
+/* LocalStorage ile basit oda kaydetme (tek sayfa/tek kullanıcı) */
+function saveRoomState(){
+  if(!roomCode) return;
+  const data = {board,turn,roomCode,ts:Date.now()};
+  localStorage.setItem('xoxo_'+roomCode, JSON.stringify(data));
+}
+function loadRoomState(code){
+  const raw = localStorage.getItem('xoxo_'+code);
+  if(!raw) return false;
+  try{
+    const d = JSON.parse(raw);
+    board = d.board || Array(9).fill(null);
+    turn = d.turn || 'X';
+    roomCode = d.roomCode || code;
+    renderBoard();
+    return true;
+  }catch(e){return false}
+}
+
+/* Eğer sayfa linki / Telegram startapp param ile açıldıysa eğer param xoxo_... ise otomatik oda yükle */
+function tryLoadFromStartApp(){
+  try{
+    // Telegram WebApp bize startapp param'ını vermiyor ama tg.initData may contain start params?
+    // Bu yöntemde kullanıcı t.me/psyar_bot/app?startapp=xoxo_XXXX linkini kullanırsa, bot'un
+    // bot içinden açma yöntemi startapp param'ını WebApp'e bir yerde taşıyabilir; emniyetle
+    // bu alanı okuyamıyorsak, kullanıcıdan manuel oda kodu girmesini isteyeceğiz.
+    const urlParams = new URLSearchParams(location.search);
+    const sa = urlParams.get('startapp');
+    if(sa && sa.startsWith('xoxo_')){
+      const code = sa.split('_')[1];
+      if(code){
+        if(loadRoomState(code)){
+          roomBox.innerHTML = `<div>Odaya bağlandı: <b>${code}</b></div>`;
+        } else {
+          roomBox.innerHTML = `<div>Odaya bağlandı: <b>${code}</b> — odada henüz hamle yok.</div>`;
+          roomCode = code; // hazır parlama
+        }
+      }
+    }
+
+    // Ayrıca tg.initDataUnsafe.start_param (bazı client'larda) olabilir:
+    if(window.Telegram && window.Telegram.WebApp && Telegram.WebApp.initDataUnsafe){
+      const init = Telegram.WebApp.initDataUnsafe;
+      if(init.start_param && init.start_param.startsWith('xoxo_')){
+        const code = init.start_param.split('_')[1];
+        roomCode = code;
+        const loaded = loadRoomState(code);
+        roomBox.innerHTML = `<div>Odaya bağlandı: <b>${code}</b></div>`;
+      }
+    }
+  }catch(e){}
+}
+tryLoadFromStartApp();
+renderBoard();
+
+/* ---------- Confetti small ---------- */
+function runConfetti(count=10){
+  const c = document.getElementById('confetti');
+  c.innerHTML = "";
+  for(let i=0;i<count;i++){
+    const s = document.createElement('span');
+    s.style.left = (Math.random()*100) + "px";
+    s.style.background = (i%2? 'var(--accent)' : 'var(--accent-2)');
+    s.style.animationDelay = (Math.random()*0.4) + "s";
+    c.appendChild(s);
+  }
+  setTimeout(()=>{ c.innerHTML = ""; }, 1200);
+}
+
+/* ---------- Helpful: if opened directly show warning link ---------- */
+document.getElementById('notTelegramWarning').addEventListener('click', ()=> {
+  // nothing
+});
+
+/* ---------- END ---------- */
+</script>
 </body>
 </html>
